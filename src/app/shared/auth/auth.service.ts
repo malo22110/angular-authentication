@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, RequestOptionsArgs   } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { TokenDataInterface } from './interfaces/token-data.interface';
 
 @Injectable()
 export class AuthService {
@@ -27,8 +29,9 @@ export class AuthService {
     return new Promise(resolve => {
         this.http.post('http://localhost:8080/oauth/token', body.toString(), {headers} )
         .subscribe(data => {
-          if (data.acces_token !== null) {
-            this.accesToken = data.acces_token;
+          const tokenData = <TokenDataInterface>data;
+          if (tokenData.access_token !== null) {
+            this.accesToken = tokenData.access_token;
             this.isAuthenticated = true;
           }
           resolve(this.isAuthenticated);

@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
 
   login(usercreds) {
      const userlogin = this.auth.login(usercreds);
-     userlogin.then((res) => {
+     userlogin.then((isAuthenticated) => {
       console.log('ogg');
-       if (res) {
+       if (isAuthenticated) {
         this.router.navigate(['/dashboard']);
        }
       });
